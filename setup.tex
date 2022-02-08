@@ -1,0 +1,283 @@
+%!TEX root=TFG.tex
+\usepackage[T1]{fontenc}
+\usepackage{bussproofs}
+\usepackage[utf8]{inputenc}
+\usepackage[english, spanish, es-noshorthands]{babel}
+\usepackage{comment}
+
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{epigraph}
+
+\usepackage{tikz}
+\usetikzlibrary{babel}
+\usetikzlibrary{cd}
+\usepackage{minted}
+
+%% FONTS: libertine+biolinum+stix
+\usepackage{mathpazo}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{svg}
+\usepackage{amsmath}
+
+\algrenewcommand\algorithmicprocedure{\textbf{procedimiento}}
+\algrenewcommand\algorithmicwhile{\textbf{mientras}}
+\algrenewcommand\algorithmicfor{\textbf{para}}
+\algrenewcommand\algorithmicdo{\textbf{:}}
+\algrenewcommand\algorithmicif{\textbf{si}}
+\algrenewcommand\algorithmicthen{\textbf{entonces}}
+\algrenewcommand\algorithmicreturn{\textbf{devuelve}}
+\algrenewcommand\algorithmicend{\textbf{fin}}
+\renewcommand\thealgorithm{}
+\usepackage{verbatim}
+
+
+% =====================
+% = Datos importantes =
+% =====================
+% hay que rellenar estos datos y luego
+% ir a \begin{document}
+	
+	\title{Métodos Numéricos de Resolución de Sistemas no Lineales}
+	\author{Milagrosa Juana Sánchez Carrero}
+	\date{2023}
+	\newcommand{\tutores}[1]{\newcommand{\guardatutores}{#1}}
+	\tutores{Prof. Tutor José Luis B. Trinidad}
+	
+	\makeatletter
+	\AtBeginDocument{
+		\hypersetup{
+			pdftitle = {\@title},
+			pdfauthor = {\@author},
+			pdfsubject= {Matemáticas}
+		}
+	}
+	\makeatother
+	
+	\newenvironment{dedication}
+	{\clearpage           % we want a new page
+		\thispagestyle{empty}% no header and footer
+		\vspace*{\stretch{1}}% some space at the top 
+		\itshape             % the text is in italics
+		\raggedleft          % flush to the right margin
+	}
+	{\par % end the paragraph
+		\vspace{\stretch{3}} % space at bottom is three times that at the top
+		\clearpage           % finish off the page
+	}
+	
+	% ======================
+	% = Páginas de títulos =
+	% ======================
+	\makeatletter
+	\edef\maintitle{\@title}
+	\renewcommand\maketitle{%
+		\begin{titlepage}
+			\parindent=0pt
+			\begin{flushleft}
+				\vspace*{1.5mm}
+				\setlength\baselineskip{0pt}
+				\setlength\parskip{0mm}
+				\begin{center}
+					%\leavevmode\includegraphics[totalheight=4.5cm]{sello.pdf}
+				\end{center}
+			\end{flushleft}
+			\vspace{1cm}
+			\bgroup
+			\Large \bfseries
+			\begin{center}
+				\@title
+			\end{center}
+			\egroup
+			\vspace*{.5cm}
+			\begin{center}
+				\@author
+			\end{center}
+			\begin{center}
+				2023
+			\end{center}
+			\vspace*{1.8cm}
+			\begin{flushright}
+				\begin{minipage}{8.45cm}
+					Memoria presentada como parte de los requisitos para la obtención del título de
+					Grado en Matemáticas por la Universidad de Extremadura.
+					
+					\vspace*{7.5mm}
+					
+					Tutorizada por
+					% \vspace*{5mm}
+				\end{minipage}\par
+				\begin{tabularx}{8.45cm}[b]{@{}l}
+					\guardatutores
+				\end{tabularx}
+			\end{flushright}
+			\vspace*{\fill}
+		\end{titlepage}
+		%%% Esto es necesario...
+		\pagestyle{tfg}
+		\renewcommand{\chaptermark}[1]{\markright{\thechapter.\space ##1}}
+		\renewcommand{\sectionmark}[1]{}
+		\renewcommand{\subsectionmark}[1]{}
+	}
+	\makeatother
+	
+	\usepackage{minted}
+	\newcommand{\newterm}[1]{\index{#1}\emph{#1}}
+	\newcommand{\code}[1]{\Verb+{#1}+}
+	
+	% ======================================
+	% = Color de la Universidad de Sevilla =
+	% ======================================
+	\definecolor{USred}{cmyk}{0,1.00,0.65,0.34}
+	
+	% =========
+	% = Otros =
+	% =========
+	\usepackage[]{tabularx}
+	\usepackage[]{enumitem}
+	\setlist{noitemsep}
+	
+	% ==========================
+	% = Matemáticas y teoremas =
+	% ==========================
+	\usepackage[]{amsmath}
+	\usepackage[]{amsthm}
+	\usepackage[]{mathtools}
+	\usepackage[]{bm}
+	\usepackage[]{thmtools}
+	\usepackage[]{amsfonts}
+	\newcommand{\marcador}{\vrule height 10pt depth 2pt width 2pt \hskip .5em\relax}
+	\newcommand{\cabeceraespecial}{%
+		\color{USred}%
+		\normalfont\bfseries}
+	\declaretheoremstyle[
+	spaceabove=\medskipamount,
+	spacebelow=\medskipamount,
+	headfont=\cabeceraespecial\marcador,
+	notefont=\cabeceraespecial,
+	notebraces={(}{)},
+	bodyfont=\normalfont\itshape,
+	postheadspace=1em,
+	numberwithin=chapter,
+	headindent=0pt,
+	headpunct={.}
+	]{importante}
+	\declaretheoremstyle[
+	spaceabove=\medskipamount,
+	spacebelow=\medskipamount,
+	headfont=\normalfont\itshape\color{USred},
+	notefont=\normalfont,
+	notebraces={(}{)},
+	bodyfont=\normalfont,
+	postheadspace=1em,
+	numberwithin=chapter,
+	headindent=0pt,
+	headpunct={.}
+	]{normal}
+	\declaretheoremstyle[
+	spaceabove=\medskipamount,
+	spacebelow=\medskipamount,
+	headfont=\normalfont\itshape\color{USred},
+	notefont=\normalfont,
+	notebraces={(}{)},
+	bodyfont=\normalfont,
+	postheadspace=1em,
+	headindent=0pt,
+	headpunct={.},
+	numbered=no,
+	qed=\color{USred}\marcador
+	]{demostracion}
+	
+	% Los nombres de los enunciados. Añade los que necesites.
+	\declaretheorem[name=Observaci\'on, style=normal]{remark}
+	\declaretheorem[name=Corolario, style=normal]{corollary}
+	\declaretheorem[name=Proposici\'on, style=normal]{proposition}
+	\declaretheorem[name=Lema, style=normal]{lemma}
+	\declaretheorem[name=Ejemplo, style=normal]{example}
+	
+	\declaretheorem[name=Teorema, style=importante]{theorem}
+	\declaretheorem[name=Definici\'on, style=importante]{definition}
+	
+	\let\proof=\undefined
+	\declaretheorem[name=Demostraci\'on, style=demostracion]{proof}
+	
+	\usepackage{scalerel}
+	\newcommand{\cat}{{\mathcal{C}}}
+	\newcommand{\Set}{{Set}}
+	\newcommand{\Grp}{{Grp}}
+	\newcommand{\Ab}{{Ab}}
+	\newcommand{\Vect}{{Vect}}
+	\newcommand{\Ring}{{Ring}}
+	\newcommand{\Cat}{{Cat}}
+	\newcommand{\Z}{{\mathbb{Z}}}
+	\newcommand{\Top}{{Top}}
+	\newcommand{\Hask}{{Hask}}
+	\newcommand{\sii}{{\ \Leftrightarrow\ }}
+	
+	\DeclareMathOperator{\dom}{dom}
+	\DeclareMathOperator{\cod}{cod}
+	\DeclareMathOperator{\id}{id}
+	\DeclareMathOperator{\Id}{Id}
+	\DeclareMathOperator{\Const}{Const}
+	
+	\newcommand{\underoverset}[3]{\underset{#1}{\overset{#2}{#3}}}
+	
+	\hyphenation{func-tor}
+	\hyphenation{func-to-res}
+	
+	% ============================
+	% = Composición de la página =
+	% ============================
+	
+	\usepackage[papersize={\OPTpagesize},
+	twoside,
+	includehead,
+	top=\OPTtopmargin,
+	bottom=\OPTbottommargin,
+	inner=\OPTinnermargin,
+	outer=\OPToutermargin,
+	bindingoffset=\OPTbindingoffset]{geometry}
+	\linespread{1.069}
+	\parskip=10pt plus 1pt minus .5pt
+	\frenchspacing
+	% \raggedright
+	
+	\setlength{\headheight}{20pt}
+	% ==============================
+	% = Composición de los títulos =
+	% ==============================
+	
+	\usepackage[explicit]{titlesec}
+	
+	\titleformat{\chapter}[hang]
+	{\Huge\sffamily\bfseries}
+	{\thechapter\hspace{20pt}\textcolor{USred}{\vrule width 2pt}\hspace{20pt}}{0pt}
+	{#1}
+	\titleformat{\section}
+	{\normalfont\Large\sffamily\bfseries}{\thesection\space\space}
+	{1ex}
+	{#1}
+	\titleformat{\subsection}
+	{\normalfont\large\sffamily}{\thesubsection\space\space}
+	{1ex}
+	{#1}
+	
+	% =======================
+	% = Cabeceras de página =
+	% =======================
+	\usepackage[]{fancyhdr}
+	\usepackage[]{emptypage}
+	\fancypagestyle{tfg}{%
+		\fancyhf{}%
+		\renewcommand{\headrulewidth}{0pt}
+		\renewcommand{\footrulewidth}{0pt}
+		\fancyhead[LE]{{\normalsize\color{USred}\bfseries\thepage}\quad
+			\small\textsc{\MakeLowercase{\maintitle}}}
+		\fancyhead[RO]{\small\textsc{\MakeLowercase{\rightmark}}%
+			\quad{\normalsize\bfseries\color{USred}\thepage}}%
+	}
+	\usepackage{makeidx}
+	\makeindex
+	\usepackage{csquotes} % comillas españolas

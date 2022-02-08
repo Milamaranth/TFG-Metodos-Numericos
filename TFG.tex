@@ -1,0 +1,73 @@
+%!TEX root=TFG-book.tex
+%!TEX TS-program = pdflatex
+%!TEX encoding = utf8
+%!TEX options=--shell-escape
+\documentclass[\OPTfontsize, twoside]{book}
+
+\input{setup} % Todos los usepackages están aquí
+
+% =============================
+% = El documento empieza aquí =
+% =============================
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  {\scshape\Large Trabajo Fin de Grado\par}
+  \vspace{1.5cm}
+  {\huge\bfseries Métodos Numéricos de Resolución de Sistemas no Lineales\par}
+  \vspace{0.025cm}
+  \rule{0.4\textwidth}{0.4pt}
+  \vspace{1cm}
+
+  {\Large\itshape Milagrosa Juana Sánchez Carrero\par}
+  \vspace{1cm}
+  tutorizado por\par
+  Prof.~Tutor~José Luis Bravo Trinidad\par
+  \vspace{1cm}
+  %\includegraphics[width=0.6\textwidth]{bookworm}
+  \vspace{7cm}
+
+  {\scshape\LARGE Universidad de Extremadura \par}
+  \vfill
+\end{titlepage}
+
+\maketitle
+
+\begin{dedication}
+Dedicado a Diego.  
+\end{dedication}
+\frontmatter
+
+\tableofcontents
+
+\mainmatter
+
+\include{introduccion}
+\include{metodos-directos}
+
+\backmatter
+
+\chapter*{Bibliografía}
+\markright{Bibliografía}
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+\begin{itemize}
+  \setlength\itemsep{1em}
+  \item \textsc{Richard L. Burden y Douglas Faires}, \emph{Numerical Analysis}, BROOKS/COLE, Cengage Learning, Ninth Edition,2011.
+  \item \textsc{Alfio Quarteroni, Riccardo Sacco y Fausto Saleri}, \emph{Text in applied mathematics: Numerical Mathematics} SPRINGER, Second Edition, 2007.
+  \item \textsc{J. Stoer, R.Burlirsch}, \emph{Introduction to numerical Analysis}, SPRINGER-VERLAG , Second Edition, 1991.
+  \item \textsc{Jonathan Richard Shewchuk}, \emph{An Introduction to the Conjugate Gradient Method	Without the Agonizing Pain}, https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf
+  \item \textsc{J.M.Ortega}, \emph{Numerical Aanlysis: A Second Course}, SIAM, 1990 Edition
+  \item \textsc{Jorge Nocedal, Stephen J. Wright} \emph{Numerical Optimization}, Springer, 2006, Second Edition
+  \item \textsc{M.J.D.Powell} \emph{Convergence properties of Algorithms for nonlinear optimization}, SIAM, 1986, Vol. 8, No. 4
+  \item \textsc{J.C.Gilbert, J.Nocedal} \emph{GLOBAL CONVERGENCE PROPERTIES OF
+  	CONJUGATE GRADIENT METHODS FOR OPTIMIZATION*}, SIAM J. Optimization, 1992, Vol. 2, No. 1, pp. 21-42
+  \item \textsc{Eugene L. Allgower, Kurt Georg} \emph{Numerical Continuation Methods}, Springer Verlag. 1990, 1st edition
+  \item \textsc{Tianran Chen, Tien-Yien Li} \emph{Homotopy continuation method for solving systems of nonlinear and polynomial equations}, Communications in Information and Systems, Volume 15, Number 2, 119–307, 2015
+%  \item \textsc{} \emph{}
+\end{itemize}
+
+\printindex
+
+\end{document}

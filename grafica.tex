@@ -1,0 +1,11 @@
+\documentclass{article}
+\usepackage{pst-3dplot}
+\begin{document}
+	
+	\psset{Alpha=0,Beta=90}
+	\begin{pspicture}(-3,-2)(3,7)
+		\pstThreeDCoor[zMax=7]
+		\psCylinder[RotX=90,RotY=45,increment=5]{2}{5}
+	\end{pspicture}
+	
+\end{document}
